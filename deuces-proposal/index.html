@@ -290,7 +290,7 @@
         <div class="phase-content">
           <div class="phase-header">
             <div class="phase-title-text">Business Reimagining</div>
-            <div class="phase-price">$1,800 / business</div>
+            <div class="phase-price">$2,100 / business</div>
           </div>
           <p class="phase-desc">Structured one-on-one engagement with each participating business owner. On the Deuces, this phase carries particular weight: many business owners have watched this corridor be talked about and planned around without being included in decisions about their own commercial environment. The reimagining session is not just a design conversation — it is the moment a business owner sees their storefront as a tool for their community's visibility and their own commercial growth.</p>
           <p class="phase-detail">Because Phase 1 has established the corridor identity and visual standards, each session is focused and efficient. Each business receives a before/after rendering aligned to the 22nd Street visual language and an implementation brief that Main Street uses to manage contractors, permits, and construction. The business owner approves. Everything else is handled.</p>
@@ -344,7 +344,7 @@
         <div class="calc-cell">
           <div class="calc-label">Phase 2 · Business reimagining</div>
           <div class="calc-value accent" id="p2-val">$12,600</div>
-          <div class="calc-sub" id="p2-sub">7 businesses × $1,800</div>
+          <div class="calc-sub" id="p2-sub">7 businesses × $2,100</div>
         </div>
       </div>
       <div class="total-bar fade-in">
@@ -379,9 +379,9 @@
   function update() {
     const b = parseInt(slider.value);
     document.getElementById('biz-count').textContent = b;
-    const p2 = b * 1800;
+    const p2 = b * 2100;
     document.getElementById('p2-val').textContent = fmt(p2);
-    document.getElementById('p2-sub').textContent = b + ' businesses × $1,800';
+    document.getElementById('p2-sub').textContent = b + ' businesses × $2,100';
     document.getElementById('total-val').textContent = fmt(8500 + p2);
   }
   slider.addEventListener('input', update);
