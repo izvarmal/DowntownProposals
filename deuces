@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deuces / 22nd Street · Storefront Mastery Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;900&family=Barlow+Condensed:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F1EB;
+    --bg-dark: #0A1428;           /* Changed to deep dark blue */
+    --text: #1A1612;
+    --text-mid: #5C5248;
+    --text-soft: #8C8278;
+    --accent: #A8761A;
+    --accent-light: #F0E6CE;
+    --accent-dark: #7A530E;
+    --rule: #D4CBC0;
+    --white: #FDFAF6;
+    --font: 'Barlow', sans-serif;
+    --font-cond: 'Barlow Condensed', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--bg-dark); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 56px; border-bottom: 1px solid #1C2A4A; }
+  .nav-brand { font-family: var(--font-cond); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #8C8278; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.active { color: var(--accent); }
+
+  #hero { min-height: 100vh; background: var(--bg-dark); display: flex; flex-direction: column; justify-content: flex-end; padding: 56px 3rem 5rem; position: relative; overflow: hidden; }
+  .hero-eyebrow { font-family: var(--font-cond); font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  .hero-title { font-family: var(--font-cond); font-size: clamp(52px, 9vw, 110px); font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; color: var(--white); margin-bottom: 2rem; max-width: 900px; }
+  .hero-title span { color: var(--accent); }
+  .hero-body { font-size: 18px; font-weight: 300; color: #9C9288; max-width: 560px; line-height: 1.65; margin-bottom: 3rem; }
+  .hero-meta { display: flex; gap: 3rem; border-top: 1px solid #1C2A4A; padding-top: 2rem; flex-wrap: wrap; }
+  .hero-meta-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 4px; }
+  .hero-meta-value { font-size: 15px; font-weight: 500; color: var(--white); }
+  .hero-bg-text { position: absolute; right: -10px; bottom: -50px; font-family: var(--font-cond); font-size: 380px; font-weight: 900; color: #0F1B35; line-height: 1; pointer-events: none; user-select: none; }
+
+  section { padding: 6rem 3rem; position: relative; }
+  section:nth-child(even) { background: var(--white); }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-label { font-family: var(--font-cond); font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-title { font-family: var(--font-cond); font-size: clamp(36px, 5vw, 58px); font-weight: 900; line-height: 1; letter-spacing: -0.01em; margin-bottom: 2rem; }
+  .section-title span { color: var(--accent); }
+  .lead { font-size: 20px; font-weight: 300; color: var(--text-mid); line-height: 1.6; max-width: 680px; margin-bottom: 3rem; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 2.5rem; }
+  .grid-cell { background: var(--bg); padding: 2.5rem; }
+  section:nth-child(even) .grid-cell { background: var(--white); }
+  .cell-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 0.875rem; }
+  .cell-title { font-family: var(--font-cond); font-size: 22px; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.1; }
+  .grid-cell p { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
+
+  .wedge-quote { background: var(--bg-dark); color: var(--white); padding: 3rem; margin-top: 2.5rem; position: relative; }
+  .wedge-quote::before { content: '\201C'; font-family: var(--font-cond); font-size: 120px; font-weight: 900; color: var(--accent); position: absolute; top: 0.5rem; left: 2rem; line-height: 1; }
+  .wedge-quote p { font-size: clamp(20px, 2.5vw, 28px); font-weight: 300; line-height: 1.5; padding-left: 4rem; }
+
+  .proof-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 3rem 0 0; }
+  .proof-cell { background: var(--bg-dark); padding: 2.5rem; }
+  .proof-num { font-family: var(--font-cond); font-size: 56px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
+  .proof-label { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; }
+  .proof-sub { font-size: 13px; color: #6C6258; line-height: 1.5; }
+
+  .identity-banner { background: var(--accent); padding: 3rem; margin: 3rem 0; }
+  .identity-banner-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); opacity: 0.7; margin-bottom: 0.75rem; }
+  .identity-banner p { font-size: clamp(18px, 2.2vw, 24px); font-weight: 400; color: var(--white); line-height: 1.55; max-width: 700px; }
+
+  .phase-block { display: grid; grid-template-columns: 80px 1fr; border-bottom: 1px solid var(--rule); }
+  .phase-block:first-child { border-top: 1px solid var(--rule); }
+  .phase-num-col { padding: 3rem 0; display: flex; align-items: flex-start; justify-content: center; border-right: 1px solid var(--rule); }
+  .phase-num-badge { font-family: var(--font-cond); font-size: 42px; font-weight: 900; color: var(--accent); line-height: 1; }
+  .phase-content { padding: 3rem 0 3rem 2.5rem; }
+  .phase-header { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .phase-title-text { font-family: var(--font-cond); font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .phase-price { font-family: var(--font-cond); font-size: 22px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .phase-desc { font-size: 16px; color: var(--text-mid); line-height: 1.65; margin-bottom: 1.25rem; max-width: 640px; }
+  .phase-detail { font-size: 14px; color: var(--text-soft); line-height: 1.6; max-width: 600px; margin-bottom: 1.25rem; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+  .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--rule); color: var(--text-soft); }
+  .tag.accent { border-color: var(--accent-light); background: var(--accent-light); color: var(--accent-dark); }
+
+  .impl-note { border: 1px solid var(--rule); padding: 2rem 2.5rem; margin-top: 3rem; display: grid; grid-template-columns: 4px 1fr; gap: 2rem; }
+  .impl-note-bar { background: var(--rule); }
+  .impl-note-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 0.625rem; }
+  .impl-note-title { font-family: var(--font-cond); font-size: 20px; font-weight: 700; margin-bottom: 0.75rem; }
+  .impl-note p { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
+
+  #investment { background: var(--bg-dark); }
+  #investment .section-title { color: var(--white); }
+  #investment .lead { color: #9C9288; }
+  .slider-wrapper { background: #0F1B35; padding: 2rem 2.5rem; border: 1px solid #1C2A4A; margin-bottom: 2rem; }
+  .slider-label-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+  .slider-label-text { font-size: 13px; font-weight: 500; color: #9C9288; }
+  .slider-value-display { font-family: var(--font-cond); font-size: 28px; font-weight: 700; color: var(--white); }
+  input[type=range] { -webkit-appearance: none; width: 100%; height: 2px; background: #1C2A4A; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--accent); cursor: pointer; border-radius: 0; }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #1C2A4A; border: 1px solid #1C2A4A; margin-bottom: 2px; }
+  .calc-cell { background: var(--bg-dark); padding: 2rem 2.5rem; }
+  .calc-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #5C5248; margin-bottom: 0.5rem; }
+  .calc-value { font-family: var(--font-cond); font-size: 36px; font-weight: 700; color: var(--white); line-height: 1; }
+  .calc-value.accent { color: var(--accent); }
+  .calc-sub { font-size: 13px; color: #5C5248; margin-top: 4px; }
+  .total-bar { background: var(--accent); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .total-bar-label { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-light); }
+  .total-bar-num { font-family: var(--font-cond); font-size: 42px; font-weight: 900; color: var(--white); line-height: 1; }
+  .calc-note { font-size: 13px; color: #5C5248; line-height: 1.6; padding-top: 1.25rem; border-top: 1px solid #1C2A4A; margin-top: 2rem; }
+
+  #close { background: var(--accent); }
+  #close .section-title { color: var(--white); }
+  #close .lead { color: var(--accent-light); }
+  .contact-block { display: flex; gap: 4rem; padding-top: 2rem; border-top: 1px solid var(--accent-dark); flex-wrap: wrap; }
+  .contact-item-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 4px; opacity: 0.7; }
+  .contact-item-value { font-size: 16px; font-weight: 500; color: var(--white); }
+  .contact-item-value a { color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 56px 1.5rem 4rem; }
+    .hero-title { font-size: 52px; }
+    .grid-2, .calc-grid, .proof-strip { grid-template-columns: 1fr; }
+    .phase-block { grid-template-columns: 60px 1fr; }
+    .hero-bg-text { font-size: 160px; }
+    .impl-note { grid-template-columns: 1fr; gap: 0.5rem; }
+    .impl-note-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Storefront Mastery</div>
+  <ul class="nav-links">
+    <li><a href="#situation">Situation</a></li>
+    <li><a href="#model">Program</a></li>
+    <li><a href="#phases">Scope</a></li>
+    <li><a href="#investment">Investment</a></li>
+    <li><a href="#close">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div style="position:relative;z-index:1;">
+    <p class="hero-eyebrow">Storefront Mastery · Proposal for The Deuces · 22nd Street South, St. Petersburg</p>
+    <h1 class="hero-title">The corridor<br><span>doesn't wait</span></h1>
+    <p class="hero-body">A two-phase storefront transformation program to activate 22nd Street from the inside out — building the commercial identity the Deuces deserves, independent of any stalled infrastructure timeline.</p>
+    <div class="hero-meta">
+      <div><div class="hero-meta-label">Prepared for</div><div class="hero-meta-value">Deuces Main Street · CRA · St. Petersburg</div></div>
+      <div><div class="hero-meta-label">Prepared by</div><div class="hero-meta-value">Jaime Izurieta · Storefront Mastery</div></div>
+      <div><div class="hero-meta-label">Date</div><div class="hero-meta-value">April 2026</div></div>
+    </div>
+  </div>
+  <div class="hero-bg-text" aria-hidden="true">22</div>
+</section>
+
+<section id="situation">
+  <div class="section-inner">
+    <div class="section-label fade-in">The situation</div>
+    <h2 class="section-title fade-in">A corridor with history,<br><span>waiting on a project<br>that stalled.</span></h2>
+    <p class="lead fade-in">The Deuces — 22nd Street South — is one of St. Petersburg's most historically significant commercial corridors. It has been planned around, promised to, and invested in by others. The businesses on the ground have been waiting for the outside world to activate them. This program changes that direction entirely.</p>
+
+    <div class="grid-2 fade-in">
+      <div class="grid-cell">
+        <div class="cell-label">Past investment focus</div>
+        <div class="cell-title">Stadium-related streetscape — now stalled</div>
+        <p>Capital improvement investment in the corridor was tied to a stadium-related streetscape project that has since stalled. Infrastructure-first thinking left the businesses — the actual economic engine of 22nd Street — without design support, visual standards, or program resources.</p>
+      </div>
+      <div class="grid-cell">
+        <div class="cell-label">Core pain point</div>
+        <div class="cell-title">Unfinished momentum on a historic street</div>
+        <p>The stalled project left a visible gap between what the corridor was promised and what it looks like today. Businesses are present but visually undefined — lacking the signage, facade quality, and street presence that signals to the market that 22nd Street is open, active, and worth visiting.</p>
+      </div>
+      <div class="grid-cell">
+        <div class="cell-label">The strategic opening</div>
+        <div class="cell-title">Activate from within, not from above</div>
+        <p>Ground-floor activation doesn't require the streetscape project to resume. It creates momentum that makes future infrastructure investment more defensible — and more visible — when it eventually arrives. This program doesn't wait on a timeline. It sets one.</p>
+      </div>
+      <div class="grid-cell">
+        <div class="cell-label">The equity dimension</div>
+        <div class="cell-title">Removing barriers for historically underinvested businesses</div>
+        <p>For a corridor with historically underinvested businesses, the 100% in-kind model is not just efficient — it is equitable. Business owners without capital, contractor relationships, or procurement experience participate on equal footing. The grant removes every barrier that has previously kept this kind of improvement out of reach.</p>
+      </div>
+    </div>
+
+    <div class="wedge-quote fade-in">
+      <p>The streetscape project gave 22nd Street a place on a map. This program gives it an identity on the street — one built by the businesses and community that have always been here, not by an infrastructure timeline that keeps moving.</p>
+    </div>
+  </div>
+</section>
+
+<section id="model">
+  <div class="section-inner">
+    <div class="section-label fade-in">Why this works</div>
+    <h2 class="section-title fade-in">When the barrier drops<br><span>to zero, businesses<br>show up.</span></h2>
+    <p class="lead fade-in">The single biggest risk a CRA board sees before authorizing a new storefront program is participation. Will businesses actually apply? Evidence from a comparable program running right now answers that directly — and the Deuces context makes the case even stronger.</p>
+
+    <div class="proof-strip fade-in">
+      <div class="proof-cell">
+        <div class="proof-num">10+</div>
+        <div class="proof-label">Applications on day one</div>
+        <div class="proof-sub">After a single workshop and one email. The program was capped at 10 businesses — it filled on day one. No cash required from any participant.</div>
+      </div>
+      <div class="proof-cell">
+        <div class="proof-num">2 wks</div>
+        <div class="proof-label">To seven signed agreements</div>
+        <div class="proof-sub">Seven business owners committed within two weeks of launch. Success attributed entirely to process simplicity and the promise of visible, tangible improvement.</div>
+      </div>
+      <div class="proof-cell">
+        <div class="proof-num">$0</div>
+        <div class="proof-label">Out of pocket for businesses</div>
+        <div class="proof-sub">The in-kind model removes the cash burden, contractor requirement, and procurement complexity that historically excludes businesses on corridors like the Deuces.</div>
+      </div>
+    </div>
+
+    <div class="identity-banner fade-in">
+      <div class="identity-banner-label">The design principle for this corridor</div>
+      <p>This is not generic revitalization. The Deuces has a cultural identity that predates and outlasts any infrastructure project. The visual standards developed in Phase 1 are built from the specific history, architecture, and community character of 22nd Street — not borrowed from another downtown. What this corridor looks like should be decided by the people who built it.</p>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div class="section-label fade-in" style="margin-bottom:1.5rem;">How the program works</div>
+      <div class="grid-2 fade-in" style="margin-top:0;">
+        <div class="grid-cell">
+          <div class="cell-label">CRA role</div>
+          <div class="cell-title">Lump-sum grant to Main Street</div>
+          <p>The CRA provides a single grant to the Main Street organization — covering design, permitting, contractor hiring, and implementation. One check. One recipient. Clean accountability to the board.</p>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Main Street role</div>
+          <div class="cell-title">Program manager & implementer</div>
+          <p>Main Street manages the process from application through construction close-out — contractor hiring, permits, design coordination, and CRA reporting. This program transfers fully to Main Street's operational ownership.</p>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Business owner role</div>
+          <div class="cell-title">Approve designs. Receive improvements.</div>
+          <p>Business owners apply, participate in their design session, and approve the final plan. They do not manage money, hire contractors, or navigate permits. The grant is 100% in-kind — no cash changes hands with the business.</p>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Storefront Mastery role</div>
+          <div class="cell-title">Strategy, design & business consultation</div>
+          <p>We establish the corridor strategy, develop the visual identity framework, lead the business reimagining sessions, and remain available as a design resource during implementation. We are not the program manager — Main Street is.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="phases">
+  <div class="section-inner">
+    <div class="section-label fade-in">Scope of work</div>
+    <h2 class="section-title fade-in">Two phases.<br><span>Built for<br>22nd Street.</span></h2>
+    <p class="lead fade-in">The program architecture is designed around the specific conditions of the Deuces — not a generic template. Phase 1 produces the corridor identity framework and the board-ready program operations document. Phase 2 activates individual businesses within it.</p>
+
+    <div style="margin-top:3rem;">
+      <div class="phase-block fade-in">
+        <div class="phase-num-col"><div class="phase-num-badge">01</div></div>
+        <div class="phase-content">
+          <div class="phase-header">
+            <div class="phase-title-text">Strategic Corridor Framework</div>
+            <div class="phase-price">$8,500</div>
+          </div>
+          <p class="phase-desc">Full corridor audit of 22nd Street South — boundary maps, Google Earth street-level analysis, business inventory, and visual baseline assessment. This phase focuses on identifying the specific blocks where concentrated storefront investment will produce the clearest visual signal, particularly in zones that the stalled streetscape project was meant to address. It maps current conditions honestly, ranks businesses by readiness and street visibility, and establishes a visual language for the corridor that reflects its historic African American identity — not a generic downtown aesthetic.</p>
+          <p class="phase-desc">This phase also delivers the program operations framework — the board-ready document that explains how the 100% in-kind model works administratively. It covers how the grant flows from CRA to Main Street, how businesses are selected, how contractors are vetted, what compliance and reporting looks like, and how this program connects to — rather than competes with — the CRA's existing capital improvement agenda on the corridor.</p>
+          <p class="phase-detail" style="color:var(--text-soft);">Flat fee. Includes travel. Delivered remotely with one on-site visit for corridor walkthrough and ED alignment session.</p>
+          <div class="tag-row">
+            <span class="tag accent">Corridor identity brief</span>
+            <span class="tag accent">Business readiness ranking</span>
+            <span class="tag accent">Pilot block selection</span>
+            <span class="tag accent">Visual standards framework</span>
+            <span class="tag accent">Grant framework</span>
+            <span class="tag accent">Application & selection criteria</span>
+            <span class="tag accent">Program operations framework</span>
+            <span class="tag accent">Capital improvement interface</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-block fade-in">
+        <div class="phase-num-col"><div class="phase-num-badge">02</div></div>
+        <div class="phase-content">
+          <div class="phase-header">
+            <div class="phase-title-text">Business Reimagining</div>
+            <div class="phase-price">$1,800 / business</div>
+          </div>
+          <p class="phase-desc">Structured one-on-one engagement with each participating business owner. On the Deuces, this phase carries particular weight: many business owners have watched this corridor be talked about and planned around without being included in decisions about their own commercial environment. The reimagining session is not just a design conversation — it is the moment a business owner sees their storefront as a tool for their community's visibility and their own commercial growth.</p>
+          <p class="phase-detail">Because Phase 1 has established the corridor identity and visual standards, each session is focused and efficient. Each business receives a before/after rendering aligned to the 22nd Street visual language and an implementation brief that Main Street uses to manage contractors, permits, and construction. The business owner approves. Everything else is handled.</p>
+          <p class="phase-detail" style="color:var(--text-soft);">Price per business is fixed regardless of program size. Businesses participate on equal footing regardless of their capital position — the in-kind model ensures access is not determined by resources.</p>
+          <div class="tag-row">
+            <span class="tag accent">Cultural identity alignment</span>
+            <span class="tag accent">Walkthrough interview</span>
+            <span class="tag accent">Before/after rendering</span>
+            <span class="tag accent">Implementation brief</span>
+            <span class="tag accent">Corridor-coherent design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="impl-note fade-in">
+      <div class="impl-note-bar"></div>
+      <div>
+        <div class="impl-note-label">Implementation phase</div>
+        <div class="impl-note-title">Managed by Main Street. Supported by Storefront Mastery.</div>
+        <p>Contractor procurement, permitting, construction management, and CRA compliance reporting are Main Street's operational responsibility — as grant recipient and program manager, they own implementation. Storefront Mastery remains available as a design and technical resource throughout: answering contractor questions, reviewing material selections, and ensuring implementation matches the approved designs. This is a consulting role, not a project management engagement, and it is not separately billed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="investment">
+  <div class="section-inner">
+    <div class="section-label fade-in">Investment</div>
+    <h2 class="section-title fade-in" style="color:var(--white);">Scales with<br><span>the corridor.</span></h2>
+    <p class="lead fade-in">Phase 1 is a flat fee. Phase 2 scales cleanly with participation. Adjust the slider to model the investment — the CRA can budget for a range from day one, with no surprises as uptake grows.</p>
+
+    <div style="margin-top:3rem;">
+      <div class="slider-wrapper fade-in">
+        <div class="slider-label-row">
+          <span class="slider-label-text">Number of businesses in the pilot</span>
+          <span class="slider-value-display" id="biz-count">7</span>
+        </div>
+        <input type="range" min="3" max="15" value="7" step="1" id="biz-slider">
+        <div style="display:flex;justify-content:space-between;margin-top:8px;">
+          <span style="font-size:11px;color:#5C5248;">3 businesses</span>
+          <span style="font-size:11px;color:#5C5248;">15 businesses</span>
+        </div>
+      </div>
+      <div class="calc-grid fade-in">
+        <div class="calc-cell">
+          <div class="calc-label">Phase 1 · Strategic framework</div>
+          <div class="calc-value">$8,500</div>
+          <div class="calc-sub">Flat fee · Travel included</div>
+        </div>
+        <div class="calc-cell">
+          <div class="calc-label">Phase 2 · Business reimagining</div>
+          <div class="calc-value accent" id="p2-val">$12,600</div>
+          <div class="calc-sub" id="p2-sub">7 businesses × $1,800</div>
+        </div>
+      </div>
+      <div class="total-bar fade-in">
+        <div>
+          <div class="total-bar-label">Total program investment</div>
+          <div style="font-size:13px;color:var(--accent-light);opacity:0.7;margin-top:2px;">Excluding contractor execution costs</div>
+        </div>
+        <div class="total-bar-num" id="total-val">$21,100</div>
+      </div>
+      <p class="calc-note fade-in">Storefront Mastery's fees are a planning and design expense within the CRA grant structure. Contractor execution costs — materials, labor, permits — are separate line items within the grant budget managed by Main Street. These are not billed by Storefront Mastery. The CRA's existing capital improvement commitment and this program are complementary investments, not competing ones — Phase 1 explicitly designs that interface.</p>
+    </div>
+  </div>
+</section>
+
+<section id="close">
+  <div class="section-inner">
+    <div class="section-label fade-in" style="color:var(--accent-light);opacity:0.8;">Next steps</div>
+    <h2 class="section-title fade-in" style="color:var(--white);">The corridor<br>is ready.<br>Let's begin.</h2>
+    <p class="lead fade-in">The next step is a meeting with the Deuces Main Street ED — to walk through the framework, identify the pilot block, and map the path to CRA authorization. No commitment required at this stage.</p>
+    <div class="contact-block fade-in">
+      <div><div class="contact-item-label">Name</div><div class="contact-item-value">Jaime Izurieta</div></div>
+      <div><div class="contact-item-label">Organization</div><div class="contact-item-value">Storefront Mastery</div></div>
+      <div><div class="contact-item-label">Email</div><div class="contact-item-value"><a href="mailto:hello@storefrontmastery.com">hello@storefrontmastery.com</a></div></div>
+      <div><div class="contact-item-label">Website</div><div class="contact-item-value"><a href="https://storefrontmastery.com" target="_blank">storefrontmastery.com</a></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slider = document.getElementById('biz-slider');
+  function fmt(n) { return '$' + n.toLocaleString(); }
+  function update() {
+    const b = parseInt(slider.value);
+    document.getElementById('biz-count').textContent = b;
+    const p2 = b * 1800;
+    document.getElementById('p2-val').textContent = fmt(p2);
+    document.getElementById('p2-sub').textContent = b + ' businesses × $1,800';
+    document.getElementById('total-val').textContent = fmt(8500 + p2);
+  }
+  slider.addEventListener('input', update);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        const link = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
